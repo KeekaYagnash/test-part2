@@ -1,16 +1,23 @@
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
-import { withAuthenticator, Button, Heading } from "@aws-amplify/ui-react";
-import styles from"@aws-amplify/ui-react/styles.css";
+import { Grid } from "@mui/material";
+import { AdminMenuItems } from "./components/navbar/AdminMenuItems";
+import { AdvisorMenuItems } from "./components/navbar/AdvisorMenuItems";
+import SideNav from "./components/navbar/Sidenav";
+//import { AuthContext } from "./context/AuthContext";
 
-const App = ({ signOut, user }) => {
+function App() {
+  //const ctx = useContext(AuthContext);
+  const ctx = localStorage.getItem("email");
   return (
-    <div style={styles.container}>
-      <Heading level={1}>Hello {user.username}</Heading>
-      <Button onClick={signOut}>Sign out</Button>
-      <h2>Amplify Todos</h2>
-    </div>
+    <>
+      <Grid container>
+        <SideNav
+          menuItems={ctx === "admin@trc.com" ? AdminMenuItems : AdvisorMenuItems}
+        />
+      </Grid>
+    </>
   );
-};
+}
 
-export default withAuthenticator(App);
+export default App;
