@@ -4,13 +4,14 @@ on:
   pull_request: # Trigger on pull request events
 
 jobs:
-  format-hcl:
+  delivery:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Check linting of Terraform files
-        uses: devops-infra/action-tflint@v0.3
+      - name: Check out code
+        uses: actions/checkout@main
+      - name: Lint Terraform
+        uses: actionshub/terraform-lint@main
   # lint:
   #   runs-on: ubuntu-latest
 
