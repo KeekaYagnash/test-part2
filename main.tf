@@ -256,6 +256,9 @@ resource "aws_iam_policy" "lambda_cloudwatch_logs_policy" {
   })
 }
 
+
+
+
 # Policy Attachment
 resource "aws_iam_role_policy_attachment" "lambda_logs_attachment" {
   role       = aws_iam_role.lambda_role.name
