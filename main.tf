@@ -1,3 +1,6 @@
+provider "aws" {
+  region = "us-east-1"
+}
 # S3 Bucket
 data "aws_s3_bucket" "vector_bucket" {
   bucket = "ai-shop-vector-files-store"
