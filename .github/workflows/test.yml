@@ -4,18 +4,25 @@ on:
   pull_request: # Trigger on pull request events
 
 jobs:
-  lint:
+  format-hcl:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.3.x # Adjust if needed
-
-      - name: Run the Action
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check linting of Terraform files
         uses: devops-infra/action-tflint@v0.3
-        with:
-          dir_filter: "**/*.tf"
+  # lint:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Setup Terraform
+  #       uses: hashicorp/setup-terraform@v2
+  #       with:
+  #         terraform_version: 1.3.x # Adjust if needed
+
+  #     - name: Run the Action
+  #       uses: devops-infra/action-tflint@v0.3
+  #       with:
+  #         dir_filter: "*"
