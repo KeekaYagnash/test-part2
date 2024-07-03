@@ -4,36 +4,23 @@ on:
   pull_request: # Trigger on pull request events
 
 jobs:
-  tflint-checks:
+  checks:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
     steps:
-      # Checkout Repository
-      - name: Check out Git Repository
-        uses: actions/checkout@v3
-
-      # TFLint - Terraform Check
-      - uses: actions/cache@v2
-        name: Cache plugin dir
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          path: ~/.tflint.d/plugins
-          key: tflint-${{ hashFiles('.tflint.hcl') }}
-
-      - uses: terraform-linters/setup-tflint@v2
-        name: Setup TFLint
+          submodules: true
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          github_token: ${{ secrets.CI_GITHUB_TOKEN }}
-
-      # Print TFLint version
-      - name: Show version
-        run: tflint --version
-
-      # Install plugins
-      - name: Init TFLint
-        run: tflint --init
-
-      # Run tflint command in each directory recursively
-      - name: Run TFLint
-        run: tflint -f compact --recursive
+          go-version-file: "go.mod"
+      - name: Run linters
+        uses: golangci/golangci-lint-action@v6.0.1
+        with:
+          version: v1.58
 
   # lint:
   #   runs-on: ubuntu-latest
