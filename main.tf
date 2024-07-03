@@ -232,7 +232,7 @@ resource "aws_lambda_permission" "s3_invoke_permission" {
 
 # Cloudwatch Policy
 resource "aws_iam_policy" "lambda_cloudwatch_logs_policy" {
-  name        = "LambdaCloudWatchLogsPolicy"
+  #   name        = "LambdaCloudWatchLogsPolicy"
   description = "Policy for Lambda to write errors to CloudWatch Logs"
   tags = {
     name        = "ai-shop-s3-cloudwatch-policy"
