@@ -232,7 +232,7 @@ resource "aws_lambda_permission" "s3_invoke_permission" {
   #   principal     = "s3.amazonaws.com"
   #   source_arn    = data.aws_s3_bucket.vector_bucket.arn
 }
-
+ 
 # Cloudwatch Policy
 resource "aws_iam_policy" "lambda_cloudwatch_logs_policy" {
   name        = "LambdaCloudWatchLogsPolicy"
