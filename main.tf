@@ -5,7 +5,7 @@ provider "aws" {
 data "aws_s3_bucket" "vector_bucket" {
   bucket = "ai-shop-vector-files-store"
 }
-    
+
 # Lambda Role
 resource "aws_iam_role" "lambda_role" {
   name = "ai-shop-execution-role-lambda"
@@ -226,11 +226,11 @@ resource "aws_s3_bucket_notification" "example" {
 
 # Invoking lambda function
 resource "aws_lambda_permission" "s3_invoke_permission" {
-  statement_id = "AllowS3Invocation"
-  action       = "lambda:InvokeFunction"
-  #   function_name = aws_lambda_function.lambda_code.function_name
-  #   principal     = "s3.amazonaws.com"
-  #   source_arn    = data.aws_s3_bucket.vector_bucket.arn
+  statement_id  = "AllowS3Invocation"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambda_code.function_name
+  principal     = "s3.amazonaws.com"
+  source_arn    = data.aws_s3_bucket.vector_bucket.arn
 }
 
 # Cloudwatch Policy
@@ -258,7 +258,7 @@ resource "aws_iam_policy" "lambda_cloudwatch_logs_policy" {
     }]
   })
 }
-   
+
 
 
 
