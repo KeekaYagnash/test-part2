@@ -5,7 +5,7 @@ provider "aws" {
 data "aws_s3_bucket" "vector_bucket" {
   bucket = "ai-shop-vector-files-store"
 }
-
+    
 # Lambda Role
 resource "aws_iam_role" "lambda_role" {
   name = "ai-shop-execution-role-lambda"

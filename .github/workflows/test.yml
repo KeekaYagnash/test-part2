@@ -16,7 +16,7 @@ jobs:
         name: Cache plugin dir
         with:
           path: ~/.tflint.d/plugins
-          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+          key: tflint-${{ hashFiles('.tflint.hcl') }}
 
       - uses: terraform-linters/setup-tflint@v2
         name: Setup TFLint
@@ -31,9 +31,10 @@ jobs:
       - name: Init TFLint
         run: tflint --init
 
-      # Run tflint command in each directory recursively # use --force if you want to continue with workflow although errors are there
+      # Run tflint command in each directory recursively
       - name: Run TFLint
-        run: tflint -f compact --recursive
+        run: tflint -f compact --recursive --force
+
   # lint:
   #   runs-on: ubuntu-latest
 
