@@ -80,7 +80,7 @@ resource "aws_s3_bucket_object" "object_upload2" {
 # }
 
 #######################
-
+   
 # Lambda Function
 resource "aws_lambda_function" "lambda_code" {
   tags = {
