@@ -27,6 +27,9 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
+      - name: tflint --init
+        run: tflint --init
+
       - name: tflint
         run: tflint
 
