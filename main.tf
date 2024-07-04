@@ -60,6 +60,13 @@ resource "aws_s3_bucket_object" "object_upload2" {
   bucket = aws_s3_bucket.load-path-and-userid_upload.bucket
   key    = "lambda_function.zip"
   source = "./lambda/lambda_function.zip"
+  tags = {
+    Name        = "prod-ai-shop-lambda-code-for-load-path-and-userid",
+    Owner       = "disraptor",
+    environment = "prod",
+    service     = "AI-Shop",
+    type        = "application"
+  }
 }
 
 # resource "aws_s3_bucket_policy" "prompt_bucket_policy" {
