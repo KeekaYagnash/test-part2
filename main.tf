@@ -91,14 +91,14 @@ resource "aws_lambda_function" "lambda_code" {
     type        = "application"
   }
   # filename         = "./lambda/lambda_function.zip"
-  s3_bucket = aws_s3_bucket.load-path-and-userid_upload.bucket
-  s3_key    = aws_s3_bucket_object.object_upload2.key
-  # function_name    = "s3-load-path-and-userid-function"
-  # role             = aws_iam_role.lambda_role.arn
-  # handler          = "lambda_function.lambda_handler"
-  # runtime          = "python3.12"
-  # source_code_hash = filebase64sha256("./lambda/lambda_function.zip")
-}  
+  s3_bucket        = aws_s3_bucket.load-path-and-userid_upload.bucket
+  s3_key           = aws_s3_bucket_object.object_upload2.key
+  function_name    = "s3-load-path-and-userid-function"
+  role             = aws_iam_role.lambda_role.arn
+  handler          = "lambda_function.lambda_handler"
+  runtime          = "python3.12"
+  source_code_hash = filebase64sha256("./lambda/lambda_function.zip")
+}
 
 # S3 Read Policy
 resource "aws_iam_policy" "s3_read_policy" {
