@@ -1,14 +1,20 @@
+provider "aws" {
+  region = "us-east-1"
+}
 # S3 Bucket
 data "aws_s3_bucket" "vector_bucket" {
-  bucket = "ai-shop-vector-files-store"
+  bucket = "a"
+}
+resource "aws_s3_bucket" "name" {
+  bucket = "t"
 }
 
 # Lambda Role
 resource "aws_iam_role" "lambda_role" {
   name = "ai-shop-execution-role-lambda"
   tags = {
-    name        = "ai-shop-s3-execution-lambda-role"
-    owner       = "Disraptor"
+    Name        = "ai-shop-s3-execution-lambda-role"
+    Owner       = "Disraptor"
     environment = "prod"
     service     = "S3 bucket"
     type        = "application"
@@ -31,7 +37,7 @@ resource "aws_s3_bucket" "load-path-and-userid_upload" {
   bucket = "lambda-upload-code-load-path-and-userid"
   tags = {
     Name        = "prod-ai-shop-lambda-code-for-load-path-and-userid",
-    owner       = "disraptor",
+    Owner       = "disraptor",
     environment = "prod",
     service     = "AI-Shop",
     type        = "application"
@@ -57,32 +63,39 @@ resource "aws_s3_bucket_object" "object_upload2" {
   bucket = aws_s3_bucket.load-path-and-userid_upload.bucket
   key    = "lambda_function.zip"
   source = "./lambda/lambda_function.zip"
+  tags = {
+    Name        = "prod-ai-shop-lambda-code-for-load-path-and-userid",
+    Owner       = "disraptor",
+    environment = "prod",
+    service     = "AI-Shop",
+    type        = "application"
+  }
 }
 
-resource "aws_s3_bucket_policy" "prompt_bucket_policy" {
-  bucket = aws_s3_bucket.load-path-and-userid_upload.bucket
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = {
-          Service = "lambda.amazonaws.com"
-        }
-        Action   = "s3:GetObject"
-        Resource = "${aws_s3_bucket_object.object_upload2.arn}"
-      }
-    ]
-  })
-}
+# resource "aws_s3_bucket_policy" "prompt_bucket_policy" {
+#   bucket = aws_s3_bucket.load-path-and-userid_upload.bucket
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Effect = "Allow"
+#         Principal = {
+#           Service = "lambda.amazonaws.com"
+#         }
+#         Action   = "s3:GetObject"
+#         Resource = "${aws_s3_bucket_object.object_upload2.arn}"
+#       }
+#     ]
+#   })
+# }
 
 #######################
 
 # Lambda Function
 resource "aws_lambda_function" "lambda_code" {
   tags = {
-    name        = "ai-shop-s3-load-path-and-userid-function"
-    owner       = "Disraptor"
+    Name        = "ai-shop-s3-load-path-and-userid-function"
+    Owner       = "Disraptor"
     environment = "prod"
     service     = "S3 bucket"
     type        = "application"
@@ -102,8 +115,8 @@ resource "aws_iam_policy" "s3_read_policy" {
   name        = "ai-shop-s3-read-policy"
   description = "Policy to allow reading from S3 bucket"
   tags = {
-    name        = "ai-shop-s3-read-policy"
-    owner       = "Disraptor"
+    Name        = "ai-shop-s3-read-policy"
+    Owner       = "Disraptor"
     environment = "prod"
     service     = "S3 bucket"
     type        = "application"
@@ -138,8 +151,8 @@ resource "aws_iam_policy" "lambda_s3_policy" {
   name        = "lambda-s3-trigger-policy"
   description = "IAM policy to allow Lambda to be triggered by S3 events"
   tags = {
-    name        = "ai-shop-s3-lambda-trigger-policy"
-    owner       = "Disraptor"
+    Name        = "ai-shop-s3-lambda-trigger-policy"
+    Owner       = "Disraptor"
     environment = "prod"
     service     = "S3 bucket"
     type        = "application"
@@ -180,8 +193,8 @@ resource "aws_iam_policy" "lambda_aurora_write_policy" {
   description = "Policy for Lambda to write to Aurora"
 
   tags = {
-    name        = "ai-shop-LambdaAuroraWritePolicy"
-    owner       = "Disraptor"
+    Name        = "ai-shop-LambdaAuroraWritePolicy"
+    Owner       = "Disraptor"
     environment = "prod"
     service     = "S3 bucket"
     type        = "application"
@@ -235,8 +248,8 @@ resource "aws_iam_policy" "lambda_cloudwatch_logs_policy" {
   name        = "LambdaCloudWatchLogsPolicy"
   description = "Policy for Lambda to write errors to CloudWatch Logs"
   tags = {
-    name        = "ai-shop-s3-cloudwatch-policy"
-    owner       = "Disraptor"
+    Name        = "ai-shop-s3-cloudwatch-policy"
+    Owner       = "Disraptor"
     environment = "prod"
     service     = "S3 bucket"
     type        = "application"
@@ -255,6 +268,9 @@ resource "aws_iam_policy" "lambda_cloudwatch_logs_policy" {
     }]
   })
 }
+
+
+
 
 # Policy Attachment
 resource "aws_iam_role_policy_attachment" "lambda_logs_attachment" {

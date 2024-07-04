@@ -4,18 +4,47 @@ on:
   pull_request: # Trigger on pull request events
 
 jobs:
-  lint:
+  terraform:
+    name: Lint and Validate Terraform
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.3.x # Adjust if needed
+          terraform_version: 1.3.0
 
-      - name: Run the Action
-        uses: devops-infra/action-tflint@v0.3
-        with:
-          dir_filter: "**/*.tf"
+      - name: Install tflint
+        run: |
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: tflint --init
+        run: tflint --init
+
+      - name: tflint
+        run: tflint
+
+  # lint:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Setup Terraform
+  #       uses: hashicorp/setup-terraform@v2
+  #       with:
+  #         terraform_version: 1.3.x # Adjust if needed
+
+  #     - name: Run the Action
+  #       uses: devops-infra/action-tflint@v0.3
+  #       with:
+  #         dir_filter: "*"
