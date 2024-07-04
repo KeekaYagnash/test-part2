@@ -62,22 +62,22 @@ resource "aws_s3_bucket_object" "object_upload2" {
   source = "./lambda/lambda_function.zip"
 }   
 
-resource "aws_s3_bucket_policy" "prompt_bucket_policy" {
-  bucket = aws_s3_bucket.load-path-and-userid_upload.bucket
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = {
-          Service = "lambda.amazonaws.com"
-        }
-        Action   = "s3:GetObject"
-        Resource = "${aws_s3_bucket_object.object_upload2.arn}"
-      }
-    ]
-  })
-}
+# resource "aws_s3_bucket_policy" "prompt_bucket_policy" {
+#   bucket = aws_s3_bucket.load-path-and-userid_upload.bucket
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Effect = "Allow"
+#         Principal = {
+#           Service = "lambda.amazonaws.com"
+#         }
+#         Action   = "s3:GetObject"
+#         Resource = "${aws_s3_bucket_object.object_upload2.arn}"
+#       }
+#     ]
+#   })
+# }
 
 #######################
 
