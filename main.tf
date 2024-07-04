@@ -5,6 +5,9 @@ provider "aws" {
 data "aws_s3_bucket" "vector_bucket" {
   bucket = "a"
 }
+resource "aws_s3_bucket" "name" {
+  bucket = "t"
+}
 
 # Lambda Role
 resource "aws_iam_role" "lambda_role" {
