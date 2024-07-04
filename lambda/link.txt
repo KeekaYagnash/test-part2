@@ -1,0 +1,1 @@
+https://github.com/terraform-linters/tflint-ruleset-aws/blob/master/docs/deep_checking.md

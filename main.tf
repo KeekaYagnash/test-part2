@@ -3,7 +3,7 @@ provider "aws" {
 }
 # S3 Bucket
 data "aws_s3_bucket" "vector_bucket" {
-  bucket = "ai-shop-vector-files-storeAJSBJAS"
+  bucket = "a"
 }
 
 # Lambda Role
