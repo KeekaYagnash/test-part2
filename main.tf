@@ -60,7 +60,7 @@ resource "aws_s3_bucket_object" "object_upload2" {
   bucket = aws_s3_bucket.load-path-and-userid_upload.bucket
   key    = "lambda_function.zip"
   source = "./lambda/lambda_function.zip"
-}  
+}
 
 resource "aws_s3_bucket_policy" "prompt_bucket_policy" {
   bucket = aws_s3_bucket.load-path-and-userid_upload.bucket
